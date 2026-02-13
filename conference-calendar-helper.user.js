@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Dutch AI Conference - Add to Calendar
 // @namespace    http://tampermonkey.net/
-// @version      1.0
+// @version      1.1
 // @description  Add calendar buttons to conference session pages
 // @author       You
 // @match        https://aiconference.nl/session/*
@@ -12,9 +12,15 @@
 (function() {
     'use strict';
 
+    let buttonContainer = null;
+    let sessionData = null;
+    let inlineParent = null;
+
     // Wait for page to load
     window.addEventListener('load', function() {
         addCalendarButton();
+        handleResponsiveLayout();
+        window.addEventListener('resize', handleResponsiveLayout);
     });
 
     function addCalendarButton() {
@@ -27,7 +33,7 @@
         }
 
         // Extract session data
-        const sessionData = extractSessionData();
+        sessionData = extractSessionData();
 
         if (!sessionData.title) {
             console.log('Could not extract session data');
@@ -35,9 +41,9 @@
         }
 
         // Create button container
-        const buttonContainer = document.createElement('div');
+        buttonContainer = document.createElement('div');
+        buttonContainer.id = 'calendar-helper-buttons';
         buttonContainer.style.cssText = `
-            margin-top: 20px;
             padding: 15px;
             background-color: #f7b500;
             border-radius: 5px;
@@ -67,10 +73,65 @@
         buttonContainer.appendChild(document.createTextNode(' '));
         buttonContainer.appendChild(icalButton);
 
-        // Insert button container after the session info
-        const speakerInfo = sessionInfoSection.querySelector('.col-6:last-child .sessie-speaker-info');
-        if (speakerInfo) {
-            speakerInfo.appendChild(buttonContainer);
+        // Store the inline parent location
+        inlineParent = sessionInfoSection.querySelector('.col-6:last-child .sessie-speaker-info');
+    }
+
+    function handleResponsiveLayout() {
+        if (!buttonContainer || !inlineParent) return;
+
+        const isWideScreen = window.innerWidth > 1300;
+
+        if (isWideScreen) {
+            // Switch to floating sidebar
+            if (buttonContainer.parentElement !== document.body) {
+                buttonContainer.remove();
+                document.body.appendChild(buttonContainer);
+            }
+
+            buttonContainer.style.cssText = `
+                position: fixed;
+                top: 50%;
+                right: 20px;
+                transform: translateY(-50%);
+                padding: 20px;
+                background-color: #f7b500;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+                z-index: 9999;
+                max-width: 250px;
+                text-align: center;
+            `;
+
+            // Update buttons for vertical layout
+            const buttons = buttonContainer.querySelectorAll('a');
+            buttons.forEach(button => {
+                button.style.display = 'block';
+                button.style.width = '100%';
+                button.style.marginBottom = '10px';
+            });
+        } else {
+            // Switch to inline display
+            if (buttonContainer.parentElement === document.body) {
+                buttonContainer.remove();
+                inlineParent.appendChild(buttonContainer);
+            }
+
+            buttonContainer.style.cssText = `
+                margin-top: 20px;
+                padding: 15px;
+                background-color: #f7b500;
+                border-radius: 5px;
+                text-align: center;
+            `;
+
+            // Update buttons for horizontal layout
+            const buttons = buttonContainer.querySelectorAll('a');
+            buttons.forEach(button => {
+                button.style.display = 'inline-block';
+                button.style.width = 'auto';
+                button.style.marginBottom = '0';
+            });
         }
     }
 

@@ -12,7 +12,11 @@
      - Or running: `open test-session-page.html` (macOS) or `xdg-open test-session-page.html` (Linux)
 
 2. **What to verify**:
-   - ✅ Two buttons should appear at the bottom of the session info box:
+   - ✅ **Responsive behavior** (resize your browser window to test):
+     - **Wide screens (>1300px)**: Buttons appear as a floating sidebar on the right side
+     - **Narrow screens (≤1300px)**: Buttons appear inline below the session info
+     - The layout should automatically adjust when resizing
+   - ✅ Two buttons should appear:
      - "📅 Add to Google Calendar" (blue button)
      - "📆 Download .ics file" (green button)
    - ✅ The buttons should be in a yellow/gold container
@@ -75,24 +79,36 @@ This will verify:
 
 ## Testing Different Scenarios
 
-### Test Case 1: Different Date Formats
+### Test Case 1: Responsive Layout
+Test the responsive behavior:
+1. Open `test-session-page.html` in your browser
+2. Make your browser window wide (>1300px):
+   - Buttons should appear as a floating sidebar on the right
+   - Buttons should be stacked vertically
+   - Container should have a shadow effect
+3. Make your browser window narrow (≤1300px):
+   - Buttons should appear inline below the session info
+   - Buttons should be side-by-side horizontally
+4. Resize back and forth to ensure smooth transitions
+
+### Test Case 2: Different Date Formats
 Edit `test-session-page.html` and change the date to test different formats:
 - "1 January 2026"
 - "25 December 2026"
 - "15 June 2026"
 
-### Test Case 2: Different Time Ranges
+### Test Case 3: Different Time Ranges
 Test with various time formats:
 - "09:00 - 10:00"
 - "14:30 - 15:45"
 - "23:00 - 23:59"
 
-### Test Case 3: Special Characters in Title
+### Test Case 4: Special Characters in Title
 Test titles with special characters:
 - "AI & Machine Learning: A Deep-Dive"
 - "Building RAG Systems (Practical Guide)"
 
-### Test Case 4: Long Descriptions
+### Test Case 5: Long Descriptions
 Test with multi-paragraph descriptions to ensure proper formatting in calendar events.
 
 ## Common Issues and Troubleshooting

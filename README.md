@@ -8,6 +8,7 @@ A Tampermonkey userscript and browser extension that adds calendar buttons to th
 - 📆 **iCal Download** - Download .ics files for any calendar app (Outlook, Apple Calendar, etc.)
 - 🎯 **Auto-detection** - Automatically extracts session details (title, date, time, speaker, location)
 - 🎨 **Native Integration** - Seamlessly integrates with the conference website design
+- 📱 **Responsive Design** - Floating sidebar on wide screens (>1300px), inline buttons on smaller screens
 
 ## Quick Start
 
@@ -89,11 +90,16 @@ See [TESTING.md](TESTING.md) for detailed testing instructions, including:
    - Date, time, and speaker from the session info section
    - Location (defaults to "Amsterdam, Netherlands")
 
-3. **Button Injection**: Two buttons are added to the session info area:
+3. **Button Injection**: Two buttons are added with responsive positioning:
+   - **Wide screens (>1300px)**: Buttons appear as a floating sidebar on the right side
+   - **Narrow screens (≤1300px)**: Buttons appear inline below the session info
+   - The layout automatically adjusts when you resize your browser window
+
+4. **Button Actions**:
    - **Google Calendar**: Opens pre-filled Google Calendar event creation page
    - **iCal Download**: Generates and downloads a `.ics` file
 
-4. **Format Handling**:
+5. **Format Handling**:
    - Dates are parsed from format: "DD Month YYYY" (e.g., "12 March 2026")
    - Times are parsed from format: "HH:MM - HH:MM" (e.g., "09:55 - 10:40")
 

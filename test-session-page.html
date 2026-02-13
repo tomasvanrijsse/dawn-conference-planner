@@ -12,6 +12,23 @@
             padding: 20px;
             background-color: #f5f5f5;
         }
+        .test-info {
+            background-color: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+        .test-info h3 {
+            margin-top: 0;
+            color: #1976d2;
+        }
+        .test-info code {
+            background-color: #fff;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
         .container.sessie {
             background: white;
             padding: 30px;
@@ -52,6 +69,16 @@
     </style>
 </head>
 <body>
+    <div class="test-info">
+        <h3>🧪 Test Page - Responsive Calendar Buttons</h3>
+        <p><strong>Resize your browser window to test the responsive behavior:</strong></p>
+        <ul>
+            <li><strong>Wide screens (&gt; 1300px):</strong> Buttons appear as a floating sidebar on the right</li>
+            <li><strong>Narrow screens (≤ 1300px):</strong> Buttons appear inline below the session info</li>
+        </ul>
+        <p>💡 Try resizing your browser window to see the buttons move dynamically!</p>
+    </div>
+
     <div class="container sessie">
         <h1>AI-Powered Healthcare: Transforming Patient Care</h1>
 
@@ -78,9 +105,15 @@
         (function() {
             'use strict';
 
+            let buttonContainer = null;
+            let sessionData = null;
+            let inlineParent = null;
+
             // Wait for page to load
             window.addEventListener('load', function() {
                 addCalendarButton();
+                handleResponsiveLayout();
+                window.addEventListener('resize', handleResponsiveLayout);
             });
 
             function addCalendarButton() {
@@ -93,7 +126,7 @@
                 }
 
                 // Extract session data
-                const sessionData = extractSessionData();
+                sessionData = extractSessionData();
 
                 if (!sessionData.title) {
                     console.log('Could not extract session data');
@@ -103,9 +136,9 @@
                 console.log('Extracted session data:', sessionData);
 
                 // Create button container
-                const buttonContainer = document.createElement('div');
+                buttonContainer = document.createElement('div');
+                buttonContainer.id = 'calendar-helper-buttons';
                 buttonContainer.style.cssText = `
-                    margin-top: 20px;
                     padding: 15px;
                     background-color: #f7b500;
                     border-radius: 5px;
@@ -135,10 +168,65 @@
                 buttonContainer.appendChild(document.createTextNode(' '));
                 buttonContainer.appendChild(icalButton);
 
-                // Insert button container after the session info
-                const speakerInfo = sessionInfoSection.querySelector('.col-6:last-child .sessie-speaker-info');
-                if (speakerInfo) {
-                    speakerInfo.appendChild(buttonContainer);
+                // Store the inline parent location
+                inlineParent = sessionInfoSection.querySelector('.col-6:last-child .sessie-speaker-info');
+            }
+
+            function handleResponsiveLayout() {
+                if (!buttonContainer || !inlineParent) return;
+
+                const isWideScreen = window.innerWidth > 1300;
+
+                if (isWideScreen) {
+                    // Switch to floating sidebar
+                    if (buttonContainer.parentElement !== document.body) {
+                        buttonContainer.remove();
+                        document.body.appendChild(buttonContainer);
+                    }
+
+                    buttonContainer.style.cssText = `
+                        position: fixed;
+                        top: 50%;
+                        right: 20px;
+                        transform: translateY(-50%);
+                        padding: 20px;
+                        background-color: #f7b500;
+                        border-radius: 8px;
+                        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+                        z-index: 9999;
+                        max-width: 250px;
+                        text-align: center;
+                    `;
+
+                    // Update buttons for vertical layout
+                    const buttons = buttonContainer.querySelectorAll('a');
+                    buttons.forEach(button => {
+                        button.style.display = 'block';
+                        button.style.width = '100%';
+                        button.style.marginBottom = '10px';
+                    });
+                } else {
+                    // Switch to inline display
+                    if (buttonContainer.parentElement === document.body) {
+                        buttonContainer.remove();
+                        inlineParent.appendChild(buttonContainer);
+                    }
+
+                    buttonContainer.style.cssText = `
+                        margin-top: 20px;
+                        padding: 15px;
+                        background-color: #f7b500;
+                        border-radius: 5px;
+                        text-align: center;
+                    `;
+
+                    // Update buttons for horizontal layout
+                    const buttons = buttonContainer.querySelectorAll('a');
+                    buttons.forEach(button => {
+                        button.style.display = 'inline-block';
+                        button.style.width = 'auto';
+                        button.style.marginBottom = '0';
+                    });
                 }
             }
 
