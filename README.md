@@ -33,9 +33,18 @@ A Tampermonkey userscript and browser extension that adds calendar buttons to co
    - https://aiconference.nl/session/*
    - https://phpconference.nl/session/*
 
-### Option 2: Browser Extension (Coming Soon)
+### Option 2: Browser Extension (Ready for Publishing!)
 
-The browser extension version is under development in the `browser-extension/` directory.
+The Chrome extension is complete and ready for installation! See the [`browser-extension/`](browser-extension/) directory for:
+- **Manual installation** instructions for local testing
+- **Publishing guide** for Chrome Web Store submission
+- All required files and assets
+
+**To test locally:**
+1. Open `chrome://extensions/`
+2. Enable "Developer mode"
+3. Click "Load unpacked"
+4. Select the `browser-extension` directory
 
 ## Testing
 
