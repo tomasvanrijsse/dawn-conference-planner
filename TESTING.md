@@ -56,7 +56,9 @@
    - Save (Ctrl+S or Cmd+S)
 
 3. **Visit a conference session page**:
-   - Go to https://aiconference.nl/session/* (any session page)
+   - Go to any supported conference session page:
+     - https://aiconference.nl/session/* (Dutch AI Conference)
+     - https://phpconference.nl/session/* (PHP Conference)
    - The calendar buttons should appear automatically
 
 4. **Verify functionality**:
@@ -114,9 +116,11 @@ Test with multi-paragraph descriptions to ensure proper formatting in calendar e
 ## Common Issues and Troubleshooting
 
 ### Issue: Buttons don't appear
+- Check you're on a supported session page (aiconference.nl/session/* or phpconference.nl/session/*)
 - Check browser console for errors
 - Verify the DOM structure matches expected selectors
 - Ensure JavaScript is enabled
+- Verify Tampermonkey is enabled and the script is active
 
 ### Issue: Date parsing fails
 - Check date format matches: "DD Month YYYY"

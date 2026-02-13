@@ -5,12 +5,14 @@
   "description": "Add calendar buttons to conference session pages to easily save events to your calendar",
   "permissions": [],
   "host_permissions": [
-    "https://aiconference.nl/*"
+    "https://aiconference.nl/*",
+    "https://phpconference.nl/*"
   ],
   "content_scripts": [
     {
       "matches": [
-        "https://aiconference.nl/session/*"
+        "https://aiconference.nl/session/*",
+        "https://phpconference.nl/session/*"
       ],
       "js": ["content.js"],
       "run_at": "document_idle"

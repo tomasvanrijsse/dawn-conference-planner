@@ -1,10 +1,11 @@
 // ==UserScript==
-// @name         Dutch AI Conference - Add to Calendar
+// @name         Conference Calendar Helper - Add to Calendar
 // @namespace    http://tampermonkey.net/
-// @version      1.1
-// @description  Add calendar buttons to conference session pages
+// @version      1.2
+// @description  Add calendar buttons to conference session pages (AI Conference & PHP Conference)
 // @author       You
 // @match        https://aiconference.nl/session/*
+// @match        https://phpconference.nl/session/*
 // @grant        none
 // @icon         https://aiconference.nl/wp-content/uploads/2026/01/cropped-fav-32x32.png
 // ==/UserScript==
@@ -258,11 +259,12 @@
             return;
         }
 
+        const hostname = window.location.hostname;
         const icalContent = `BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:-//Conference Calendar Helper//EN
 BEGIN:VEVENT
-UID:${Date.now()}@aiconference.nl
+UID:${Date.now()}@${hostname}
 DTSTAMP:${formatDateForCalendar(new Date())}
 DTSTART:${formatDateForCalendar(startDate)}
 DTEND:${formatDateForCalendar(endDate)}

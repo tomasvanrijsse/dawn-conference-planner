@@ -1,6 +1,10 @@
 # Conference Calendar Helper
 
-A Tampermonkey userscript and browser extension that adds calendar buttons to the Dutch AI Conference session pages, making it easy to add sessions to your calendar.
+A Tampermonkey userscript and browser extension that adds calendar buttons to conference session pages, making it easy to add sessions to your calendar.
+
+**Supported Conferences:**
+- Dutch AI Conference (aiconference.nl)
+- PHP Conference (phpconference.nl)
 
 ## Features
 
@@ -25,7 +29,9 @@ A Tampermonkey userscript and browser extension that adds calendar buttons to th
 
 4. Save (Ctrl+S or Cmd+S)
 
-5. Visit any session page on https://aiconference.nl/session/* and the calendar buttons will appear!
+5. Visit any session page on the supported conference websites and the calendar buttons will appear:
+   - https://aiconference.nl/session/*
+   - https://phpconference.nl/session/*
 
 ### Option 2: Browser Extension (Coming Soon)
 
@@ -82,7 +88,9 @@ See [TESTING.md](TESTING.md) for detailed testing instructions, including:
 
 ## How It Works
 
-1. **Page Detection**: The script runs on any page matching `https://aiconference.nl/session/*`
+1. **Page Detection**: The script runs on any page matching:
+   - `https://aiconference.nl/session/*`
+   - `https://phpconference.nl/session/*`
 
 2. **Data Extraction**: It extracts:
    - Session title from `<h1>` tag
@@ -164,7 +172,9 @@ const googleButton = createButton(
 ## Troubleshooting
 
 ### Buttons Don't Appear
-1. Check that you're on a page matching `https://aiconference.nl/session/*`
+1. Check that you're on a supported conference session page:
+   - `https://aiconference.nl/session/*`
+   - `https://phpconference.nl/session/*`
 2. Open browser DevTools (F12) and check the Console for errors
 3. Verify Tampermonkey is enabled
 4. Make sure the script is enabled in Tampermonkey dashboard
@@ -185,4 +195,8 @@ MIT License - feel free to use and modify for your needs.
 
 ## Credits
 
-Created for the Dutch AI Conference (https://aiconference.nl/) attendees who want an easy way to add sessions to their calendars.
+Created for conference attendees who want an easy way to add sessions to their calendars.
+
+Supports:
+- Dutch AI Conference (https://aiconference.nl/)
+- PHP Conference (https://phpconference.nl/)
